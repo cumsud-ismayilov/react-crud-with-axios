@@ -18,7 +18,7 @@ function Create() {
 
  const delete_company = async (id) => {
   try {
-    await deleteCompany(id); // API-dən sil
+    await deleteCompany(id); 
     setCompanies((prev) => prev.filter((company) => company.id !== id)); // Local state-dən də sil
   } catch (error) {
     console.log(error);
