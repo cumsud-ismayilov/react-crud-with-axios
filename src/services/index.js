@@ -22,3 +22,12 @@ export const deleteCompany = async (id) => {
 
   return res.data
 }
+
+
+export const updateCompany = async (body, id) => {
+  const res = await api.put(`/suppliers/${id}`, body);
+  if (!res.data) {
+    throw new Error("Update Company fetch Error", id);
+  }
+  return res.data
+}

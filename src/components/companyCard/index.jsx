@@ -2,7 +2,21 @@ import DeleteIcon from "../../icons/delete";
 import EditIcon from "../../icons/edit";
 import { deleteCompany } from "../../services";
 
-function CompanyCard({ companyName, contactName, contactTitle, id ,up ,setUp}) {
+function CompanyCard({ companyName, contactName, contactTitle, address,id ,up ,setUp,setIsEditModalOpen ,setSelectedCompany}) {
+
+
+ const handleEdit = () => {
+    setSelectedCompany({
+      id,
+      companyName,
+      contactName,
+      contactTitle,
+      address
+    });
+    setIsEditModalOpen(true);
+  };
+
+
   const delete_company = async () => {
     try {
      await deleteCompany(id)
@@ -23,7 +37,7 @@ function CompanyCard({ companyName, contactName, contactTitle, id ,up ,setUp}) {
         <button className="cursor-pointer" onClick={delete_company}>
           <DeleteIcon />
         </button>
-        <button className="cursor-pointer">
+        <button className="cursor-pointer" onClick={handleEdit} >
           <EditIcon />
         </button>
       </div>

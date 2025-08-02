@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import CompanyCard from "../../components/companyCard";
 import { getAllCompanies } from "../../services";
+import EditModal from "../../components/editModal";
 
 function Home() {
   const [companies, setCompanies] = useState([]);
   const [val, setVal] = useState("");
   const [up, setUp] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const closeModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   useEffect(() => {
     (async () => {
@@ -17,8 +24,6 @@ function Home() {
       }
     })(); // <-- bu sonda () ilə funksiyanı İCRA edirsən
   }, [up]);
-
-  
 
   return (
     <div>
@@ -33,8 +38,23 @@ function Home() {
         {companies
           .filter((item) => item.companyName.toLowerCase().includes(val))
           .map((company) => (
-            <CompanyCard {...company} key={company.id} up={up} setUp={setUp} />
+            <CompanyCard
+              {...company}
+              key={company.id}
+              up={up}
+              setUp={setUp}
+              setIsEditModalOpen={setIsEditModalOpen}
+              setSelectedCompany={setSelectedCompany}
+            />
           ))}
+        {isEditModalOpen && selectedCompany && (
+          <EditModal
+            closeModal={closeModal}
+            selectedCompany={selectedCompany}
+            setUp={setUp}
+            up={up}
+          />
+        )}
       </div>
     </div>
   );
