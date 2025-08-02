@@ -1,9 +1,11 @@
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
-import { useEffect, useState } from "react";
-import { updateCompany } from "../../services";
+import { useState } from "react";
+import { createCompany } from "../../services";
 
-export default function EditModal({ closeModal, selectedCompany, setUp, up }) {
+function CreateModal({ setIsCreateModal,up,setUp,companies, setCompanies}) {
+  const closeModal = () => {
+    setIsCreateModal(false);
+  };
+
   const [formData, setFormData] = useState({
     companyName: "",
     contactName: "",
@@ -16,16 +18,6 @@ export default function EditModal({ closeModal, selectedCompany, setUp, up }) {
     postalCode: "",
   });
 
-  useEffect(() => {
-    if (selectedCompany) {
-      setFormData((prev) => ({
-        ...prev,
-        ...selectedCompany,
-        ...(selectedCompany.address || {}), // əgər address nested-dirsə
-      }));
-    }
-  }, [selectedCompany]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -34,20 +26,17 @@ export default function EditModal({ closeModal, selectedCompany, setUp, up }) {
     }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-   await updateCompany(formData, formData.id); 
-    console.log("Göndərilən:", formData);
-  } catch (error) {
-    console.error("Yeniləmə xətası:", error);
-  } finally {
-    setUp(!up); 
-    closeModal(); 
-  }
-};
-
-
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const created = await createCompany(formData); // ✳️ POST atırsan
+      setCompanies([...companies, created]);         // ✅ yeni datanı əlavə et
+    } catch (error) {
+      console.error("Yaradılma xətası:", error);
+    } finally {
+      closeModal();
+    }
+  };
 
   return (
     <div
@@ -269,3 +258,5 @@ const handleSubmit = async (e) => {
     </div>
   );
 }
+
+export default CreateModal;

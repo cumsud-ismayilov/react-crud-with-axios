@@ -31,3 +31,13 @@ export const updateCompany = async (body, id) => {
   }
   return res.data
 }
+
+
+
+export const createCompany = async (body) => {
+  const res = await api.post("/suppliers", body);
+  if (!res.data) {
+    throw new Error("Create Company fetch Error");
+  }
+  return res.data
+}
