@@ -29,8 +29,8 @@ function CreateModal({ setIsCreateModal,up,setUp,companies, setCompanies}) {
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const created = await createCompany(formData); // ✳️ POST atırsan
-      setCompanies([...companies, created]);         // ✅ yeni datanı əlavə et
+      const created = await createCompany(formData); 
+      setCompanies([...companies, created]);         
     } catch (error) {
       console.error("Yaradılma xətası:", error);
     } finally {

@@ -21,7 +21,7 @@ export default function EditModal({ closeModal, selectedCompany, setUp, up }) {
       setFormData((prev) => ({
         ...prev,
         ...selectedCompany,
-        ...(selectedCompany.address || {}), // əgər address nested-dirsə
+        ...(selectedCompany.address || {}), 
       }));
     }
   }, [selectedCompany]);
